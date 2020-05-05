@@ -1,32 +1,46 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import java.io.IOException;
 import static javafx.scene.text.FontWeight.*;
 
-public class Daftar extends Login{
-    Stage window;
+public class Daftar extends Application{
+    private String nama;
+    private String username;
+    private String password;
 
     public static void main(String[] args) {
         launch(args);
     }
+    public void setNama(String nama){
+        this.nama = nama;
+    }
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setPassword(String password){
+        this.password = password;
+    }
+    public String getNama(){
+        return this.nama;
+    }
+    public String getUsername(){
+        return this.username;
+    }
+    public String getPassword(){
+        return this.password;
+    }
 
-    public void p(Stage primaryStage){
-        Login login = new Login();
-
-        window = primaryStage;
-        window.setTitle("Daftar");
+    public void start(Stage primaryStage){
+        primaryStage.setTitle("Daftar");
+        final Label label = new Label();
 
 //        GridPane
         GridPane grid = new GridPane();
@@ -50,7 +64,7 @@ public class Daftar extends Login{
         grid.add(txtNama,0,5);
 
         TextField txtUser = new TextField();
-        txtUser.setPromptText("Email");
+        txtUser.setPromptText("Username");
         grid.add(txtUser, 0, 6);
 
         PasswordField passUser = new PasswordField();
@@ -68,16 +82,25 @@ public class Daftar extends Login{
 //        End of media Content
 
 //        Back-End Start
-        link.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                login.start(primaryStage);
-            }
+        Login login = new Login();
+
+        nextBtn.setOnAction(actionEvent -> {
+            setNama(txtNama.getText());
+            setUsername(txtUser.getText());
+            setPassword(passUser.getText());
+
+            login.sendData(getNama(),getUsername(),getPassword());
+
+            label.setText("Data Sudah terisi, Silahkan Login!");
+            label.setTextFill(Color.GREEN);
+            grid.add(label,0,11);
         });
+
+        link.setOnAction(actionEvent -> login.start(primaryStage));
 //        End of back-End
 
         Scene scene = new Scene(grid, 600,400);
-        window.setScene(scene);
-        window.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

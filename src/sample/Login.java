@@ -1,39 +1,29 @@
 package sample;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import java.io.IOException;
 import static javafx.scene.text.FontWeight.*;
 
-public class Login extends Application{
-    Stage window;
-    String user = "Dhanny";
-    String pw = "password";
-    String checkUser, checkPW;
+class Login{
+    private String checkUser, checkPW;
+    private String nama,username,password;
 
-    public static void main(String[] args) {
-        launch(args);
+    public void sendData(String nama, String username,String password){
+        this.nama = nama;
+        this.username = username;
+        this.password = password;
     }
 
-    @Override
     public void start(Stage primaryStage){
+        primaryStage.setTitle("Login");
         Daftar daftar = new Daftar();
-
-        window = primaryStage;
-        window.setTitle("Login");
-
 //        GridPane
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
@@ -71,34 +61,25 @@ public class Login extends Application{
         Label label = new Label();
 
 //        Back-End Start
-        nextBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                checkUser = txtUser.getText().toString();
-                checkPW = passUser.getText().toString();
+        nextBtn.setOnAction(actionEvent -> {
+            checkUser = txtUser.getText();
+            checkPW = passUser.getText();
 
-                if (checkUser.equals(user) && checkPW.equals(pw)){
-                    label.setText("Login Sukses!");
-                    label.setTextFill(Color.GREEN);
-                    grid.add(label,0,12);
-                }else{
-                    label.setText("Login Gagal!");
-                    label.setTextFill(Color.RED);
-                    grid.add(label,0,12);
-                }
+            if(checkUser.equals(username) && checkPW.equals(password)){
+                label.setText("Login Sukses!");
+                label.setTextFill(Color.GREEN);
+            }else{
+                label.setText("Login Gagal!");
+                label.setTextFill(Color.RED);
             }
+            grid.add(label,0,12);
         });
 
-        link.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                daftar.p(primaryStage);
-            }
-        });
+        link.setOnAction(actionEvent -> daftar.start(primaryStage));
 //        End of Back-End
 
         Scene scene = new Scene(grid,600, 400);
-        window.setScene(scene);
-        window.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
