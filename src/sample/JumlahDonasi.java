@@ -2,13 +2,13 @@ package sample;
 
 
 import javafx.application.Application;
-import javafx.geometry.HPos;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -16,12 +16,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.*;
 
-import static javafx.application.Application.launch;
+//import java.awt.event.ActionEvent;
+//import java.beans.EventHandler;
 
 public class JumlahDonasi extends Application {
     Stage window;
+    String userInput;
 
     public static void main(String[] args) { launch(args);}
 
@@ -62,6 +63,58 @@ public class JumlahDonasi extends Application {
         nominalButton5.setMaxWidth(400);
         nominalButton6.setMaxWidth(200);
 
+        //Start of Back-End Button
+        Alert alertBtn =new Alert(AlertType.NONE,"",ButtonType.OK);
+        nominalButton1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton1.getText()+ " Berhasil");
+                alertBtn.show();
+            }
+        });
+        nominalButton2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton2.getText()+ " Berhasil");
+                alertBtn.show();
+            }
+        });
+        nominalButton3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton3.getText()+ " Berhasil");
+                alertBtn.show();
+            }
+        });
+        nominalButton4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton4.getText()+ " Berhasil");
+                alertBtn.show();
+            }
+        });
+        nominalButton5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton5.getText()+ " Berhasil");
+                alertBtn.show();
+            }
+        });
+        nominalButton6.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton6.getText()+ " Berhasil");
+                alertBtn.show();
+            }
+        });
+        //End of Back-End Button
+
         Text text =new Text("Masukkan Nominal Donasi Lain :");
         text.setFont(Font.font("Quicksand",FontWeight.LIGHT,14));
         grid.add(text,0,8,2,1);
@@ -74,6 +127,7 @@ public class JumlahDonasi extends Application {
         nominalInput.setPromptText("0");
         grid.add(nominalInput,1,10,2,1);
         nominalInput.setMaxWidth(600);
+        userInput = nominalInput.getText().toString();
 
         Button donasiBtn = new Button("Donasi");
         donasiBtn.setFont(Font.font("Quicksand",FontWeight.BOLD,14));
@@ -81,9 +135,20 @@ public class JumlahDonasi extends Application {
         donasiBtn.setMaxWidth(500);
         donasiBtn.setStyle("-fx-background-color: #00FF00; ");
         grid.add(donasiBtn, 0,12,3,2);
-        donasiBtn.setOnAction(event -> {
-            System.out.println("Donasi Berhasil");
+
+        //Start Back-End Donasi Button
+        donasiBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                userInput = nominalInput.getText().toString();
+                Alert alert = new Alert(Alert.AlertType.NONE, " ",ButtonType.OK);
+                alert.setTitle("Informasi");
+                alert.setContentText("Donasi Sejumlah Rp. "+ userInput+ " Berhasil");
+                alert.show();
+
+            }
         });
+        //End Back-End Donasi Button
 
         Scene scene = new Scene(grid, 800,400);
         window.setScene(scene);
