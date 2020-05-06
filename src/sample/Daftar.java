@@ -39,9 +39,9 @@ public class Daftar extends Application{
     }
 
     public void start(Stage primaryStage){
-        primaryStage.setTitle("Daftar");
-        final Label label = new Label();
+        primaryStage.setTitle("Donasi Berkah");
 
+        final Label label = new Label();
 //        GridPane
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
@@ -53,10 +53,12 @@ public class Daftar extends Application{
 //        Media Content
         Text headingtext = new Text("\tDonasi Berkah");
         headingtext.setFont(Font.font("Tahoma", MEDIUM, 25));
+        headingtext.setFill(Color.GREEN);
         grid.add(headingtext, 0,0);
 
         Text text = new Text("Tambahkan Data diri anda terlebih dahulu untuk berdonasi");
         text.setFont(Font.font("Tahoma", LIGHT, 12));
+        text.setFill(Color.GREEN);
         grid.add(text, 0,1);
 
         TextField txtNama = new TextField();
@@ -77,7 +79,7 @@ public class Daftar extends Application{
         nextBtn.setStyle("-fx-background-color: #00FF00; ");
         grid.add(nextBtn, 0,8);
 
-        Hyperlink link = new Hyperlink("Login");
+        Hyperlink link = new Hyperlink("Sudah Punya Akun? Login");
         grid.add(link,0,10);
 //        End of media Content
 
@@ -90,7 +92,6 @@ public class Daftar extends Application{
             setPassword(passUser.getText());
 
             login.sendData(getNama(),getUsername(),getPassword());
-
             label.setText("Data Sudah terisi, Silahkan Login!");
             label.setTextFill(Color.GREEN);
             grid.add(label,0,11);
@@ -99,7 +100,7 @@ public class Daftar extends Application{
         link.setOnAction(actionEvent -> login.start(primaryStage));
 //        End of back-End
 
-        Scene scene = new Scene(grid, 600,400);
+        Scene scene = new Scene(grid, 800,400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

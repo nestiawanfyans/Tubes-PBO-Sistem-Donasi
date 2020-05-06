@@ -22,7 +22,7 @@ class Login{
     }
 
     public void start(Stage primaryStage){
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("Donasi Berkah");
         Daftar daftar = new Daftar();
 //        GridPane
         GridPane grid = new GridPane();
@@ -78,7 +78,7 @@ class Login{
         link.setOnAction(actionEvent -> daftar.start(primaryStage));
 //        End of Back-End
 
-        Scene scene = new Scene(grid,600, 400);
+        Scene scene = new Scene(grid,800, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
