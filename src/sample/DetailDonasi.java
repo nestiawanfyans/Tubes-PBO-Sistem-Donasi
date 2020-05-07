@@ -5,9 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,10 +15,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
-import javax.swing.text.ParagraphView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class DetailDonasi extends Application {
     Stage window;
@@ -38,7 +35,7 @@ public class DetailDonasi extends Application {
         grid.setPadding(new Insets(10));
 
         ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("images/dic7frw54wd41.png"));
+        Image img = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
 
         Label label = new Label();
         label.setText("Donasi Berkah");
