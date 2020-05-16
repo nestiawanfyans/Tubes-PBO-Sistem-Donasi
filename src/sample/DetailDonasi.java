@@ -15,6 +15,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,8 +36,9 @@ public class DetailDonasi extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(10));
 
+        DataDonasi dataDonasi = new DataDonasi();
         ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        Image img = new Image(new FileInputStream("C:/Users/sraff/Downloads/Other File/dic7frw54wd41.png"));
 
         Label label = new Label();
         label.setText("Donasi Berkah");
@@ -51,21 +54,30 @@ public class DetailDonasi extends Application {
         grid.add(imageView,0,2,1,1);
 
         Label donasiTitle = new Label();
-        donasiTitle.setText("Anak yang Terlantar");
+        donasiTitle.setText(dataDonasi.getJudulDonasi());
         donasiTitle.setFont(Font.font("Quicksand",FontWeight.MEDIUM,24));
         grid.add(donasiTitle,0,3);
 
-        Label donasiLoc = new Label();
-        donasiLoc.setText("Rumah Yatim");
-        donasiLoc.setTextFill(Color.SILVER);
-        donasiLoc.setFont(Font.font("Quicksand",FontWeight.LIGHT,16));
-        grid.add(donasiLoc,0,4);
+        Label donasiPenyelenggara = new Label();
+        donasiPenyelenggara.setText(dataDonasi.getPenyelenggara());
+        donasiPenyelenggara.setTextFill(Color.SILVER);
+        donasiPenyelenggara.setFont(Font.font("Quicksand",FontWeight.LIGHT,16));
+        grid.add(donasiPenyelenggara,0,4);
+
+
+        Text donasiDana = new Text();
+        donasiDana.setText("Rp. "+ dataDonasi.getDanaTerkumpul().toString() + "\t Target\t" + dataDonasi.getDanaTarget().toString());
+        grid.add(donasiDana,0,5);
+
+        Text DeadlineDonasi = new Text();
+        DeadlineDonasi.setText(dataDonasi.getTargethari() + " Hari Lagi");
+        grid.add(DeadlineDonasi,0,7);
 
         Button donasiBtn = new Button("Donasi Sekarang");
         donasiBtn.setAlignment(Pos.CENTER);
         donasiBtn.setMaxWidth(300);
         donasiBtn.setStyle("-fx-background-color: #00FF00; ");
-        grid.addRow(6,donasiBtn);
+        grid.add(donasiBtn,0,6);
 
         Text Deskripsi = new Text();
         Deskripsi.setText("Deskripsi");

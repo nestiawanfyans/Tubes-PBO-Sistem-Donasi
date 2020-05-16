@@ -9,6 +9,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+
+import java.net.ConnectException;
+import java.sql.Connection;
+
 import static javafx.scene.text.FontWeight.*;
 
 public class Daftar extends Application{
@@ -46,7 +50,8 @@ public class Daftar extends Application{
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setVgap(10);
-        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setVgap(10);
         grid.setPadding(new Insets(10));
 //        End of Gridpane
 
@@ -69,32 +74,42 @@ public class Daftar extends Application{
         txtUser.setPromptText("Username");
         grid.add(txtUser, 0, 6);
 
+        TextField txtEmail = new TextField();
+        txtEmail.setPromptText("Emil");
+        grid.add(txtEmail, 0, 7);
+
         PasswordField passUser = new PasswordField();
         passUser.setPromptText("Password");
-        grid.add(passUser, 0,7);
+        grid.add(passUser, 0,8);
 
         Button nextBtn = new Button("Lanjut Berdonasi");
         nextBtn.setMaxHeight(200);
         nextBtn.setMaxWidth(500);
         nextBtn.setStyle("-fx-background-color: #00FF00; ");
-        grid.add(nextBtn, 0,8);
+        grid.add(nextBtn, 0,10);
 
         Hyperlink link = new Hyperlink("Sudah Punya Akun? Login");
-        grid.add(link,0,10);
+        grid.add(link,0,11);
 //        End of media Content
 
 //        Back-End Start
         Login login = new Login();
 
         nextBtn.setOnAction(actionEvent -> {
-            setNama(txtNama.getText());
-            setUsername(txtUser.getText());
-            setPassword(passUser.getText());
+            //data
+            String nama         = txtNama.getText();
+            String username     = txtUser.getText();
+            String email        = txtEmail.getText();
+            String pass         = passUser.getText();
 
-            login.sendData(getNama(),getUsername(),getPassword());
-            label.setText("Data Sudah terisi, Silahkan Login!");
+            // insert data in database. DriverCOnnection - stm;
+            koneksi koneksiQuery = new koneksi();
+            koneksiQuery.createUser(nama, username, email, pass);
+
+            // get Message success or fail in insert data.
+            label.setText(koneksiQuery.messageCreateUser());
             label.setTextFill(Color.GREEN);
-            grid.add(label,0,11);
+            grid.add(label,0,12);
         });
 
         link.setOnAction(actionEvent -> login.start(primaryStage));
