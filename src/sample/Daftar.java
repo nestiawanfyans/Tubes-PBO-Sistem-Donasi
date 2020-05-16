@@ -69,6 +69,10 @@ public class Daftar extends Application{
         txtUser.setPromptText("Username");
         grid.add(txtUser, 0, 6);
 
+        TextField txtEmail = new TextField();
+        txtUser.setPromptText("Emil");
+        grid.add(txtUser, 0, 6);
+
         PasswordField passUser = new PasswordField();
         passUser.setPromptText("Password");
         grid.add(passUser, 0,7);
@@ -92,7 +96,8 @@ public class Daftar extends Application{
             setPassword(passUser.getText());
 
             login.sendData(getNama(),getUsername(),getPassword());
-            label.setText("Data Sudah terisi, Silahkan Login!");
+            label.setText("Data Sudah terisi, Silahkan Login!" + "Nama : " + txtNama.getText() + " User : " + txtUser.getText() + " Email : " + txtEmail.getText() +" Pass : " + passUser.getText());
+
             label.setTextFill(Color.GREEN);
             grid.add(label,0,11);
         });
