@@ -50,7 +50,7 @@ public class Daftar extends Application{
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setVgap(10);
-        grid.setHgap(10);
+        grid.setVgap(10);
         grid.setPadding(new Insets(10));
 //        End of Gridpane
 
@@ -73,9 +73,9 @@ public class Daftar extends Application{
         txtUser.setPromptText("Username");
         grid.add(txtUser, 0, 6);
 
-        TextField txtEmail = new TextField();
-        txtUser.setPromptText("Emil");
-        grid.add(txtUser, 0, 6);
+//        TextField txtEmail = new TextField();
+//        txtUser.setPromptText("Emil");
+//        grid.add(txtUser, 0, 6);
 
         PasswordField passUser = new PasswordField();
         passUser.setPromptText("Password");
@@ -95,25 +95,18 @@ public class Daftar extends Application{
         Login login = new Login();
 
         nextBtn.setOnAction(actionEvent -> {
-
             //data
             String nama         = txtNama.getText();
             String username     = txtUser.getText();
-            String email        = txtEmail.getText();
+            String email        = "nestiawan@gmail.com";
             String pass         = passUser.getText();
-
-            //try sending data to login file.
-            setNama(nama);
-            setUsername(username);
-            setPassword(pass);
-            login.sendData(getNama(),getUsername(),getPassword());
 
             // insert data in database. DriverCOnnection - stm;
             koneksi koneksiQuery = new koneksi();
             koneksiQuery.createUser(nama, username, email, pass);
 
-            label.setText("Data Sudah terisi, Silahkan Login!" + "Nama : " + txtNama.getText() + " User : " + txtUser.getText() + " Email : " + txtEmail.getText() +" Pass : " + passUser.getText());
-
+            // get Message success or fail in insert data.
+            label.setText(koneksiQuery.messageCreateUser());
             label.setTextFill(Color.GREEN);
             grid.add(label,0,11);
         });

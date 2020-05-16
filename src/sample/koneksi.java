@@ -11,6 +11,9 @@ public class koneksi {
     public static Connection con; // drive connection
     public static Statement stm; // con.createStatement();
 
+    //message
+    boolean isMessageCreateUser = false;
+
     // drive connection setup
     public static void driveConnection() throws SQLException {
 
@@ -41,13 +44,23 @@ public class koneksi {
             driveConnection();
 
             stm = con.createStatement();
-            stm.executeUpdate("INSERT INTO users VALUES ('"+ name +"', '"+ username +"', '"+ email +"', '"+ pass +"')");
+            stm.executeUpdate("INSERT INTO user(nama, username, email, password) VALUES ('"+ name +"', '"+ username +"', '"+ email +"', '"+ pass +"')");
             stm.close();
 
-            System.out.println("Berhasil Insert data User");
+            this.isMessageCreateUser = true;
+            System.out.println(messageCreateUser());
 
         } catch (Exception e) {
-            System.err.println("Terjadi Kesalahan pada Insert User : " + e.getMessage());
+            System.out.println( messageCreateUser() + e.getMessage());;
+        }
+    }
+
+    //message
+    public String messageCreateUser() {
+        if(this.isMessageCreateUser){
+            return "Data Berhasil ditambahakan, Silakan lakukan login...";
+        } else {
+            return "Terjadi Kesalahan pada Pendataan User : ";
         }
     }
 
