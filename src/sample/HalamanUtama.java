@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class HalamanUtama extends Application{
@@ -22,7 +23,7 @@ public class HalamanUtama extends Application{
         launch(args);
     }
 
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage){
         primaryStage.setTitle("Donasi Berkah");
         final Label label = new Label();
 
@@ -44,7 +45,14 @@ public class HalamanUtama extends Application{
 //        Donasi satu
         DataDonasi donasiSatu = new DataDonasi();
         final ImageView selectedImage = new ImageView();
-        Image image1 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        Image image1 = null;
+
+        try {
+            image1 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         Label donasiSatuJudul = new Label();
         Text donasiSatuPenyelenggara = new Text();
         Text donasiSatuDana = new Text();
@@ -80,7 +88,14 @@ public class HalamanUtama extends Application{
 //        Donasi Dua
         DataDonasi donasiDua = new DataDonasi();
         final ImageView selectedImage2 = new ImageView();
-        Image image2 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        Image image2 = null;
+
+        try {
+            image2 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         Label donasiDuaJudul = new Label();
         Text donasiDuaPenyelenggara = new Text();
         Text donasiDuaDana = new Text();

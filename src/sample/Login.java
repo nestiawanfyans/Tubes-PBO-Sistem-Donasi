@@ -9,6 +9,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+
 import static javafx.scene.text.FontWeight.*;
 
 class Login{
@@ -61,6 +64,7 @@ class Login{
         Label label = new Label();
 
 //        Back-End Start
+        HalamanUtama halamanUtama = new HalamanUtama();
         nextBtn.setOnAction(actionEvent -> {
             checkUser = txtUser.getText();
             checkPW = passUser.getText();
@@ -68,6 +72,7 @@ class Login{
             if(checkUser.equals(username) && checkPW.equals(password)){
                 label.setText("Login Sukses!");
                 label.setTextFill(Color.GREEN);
+                halamanUtama.start(primaryStage);
             }else{
                 label.setText("Login Gagal!");
                 label.setTextFill(Color.RED);
