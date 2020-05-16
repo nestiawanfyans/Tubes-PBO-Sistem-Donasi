@@ -35,7 +35,7 @@ public class DetailDonasi extends Application {
         grid.setPadding(new Insets(10));
 
         ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        Image img = new Image(new FileInputStream("/home/nestiawanfyan/Unduhan/NO1a-UAS-Basdat.jpg"));
 
         Label label = new Label();
         label.setText("Donasi Berkah");
