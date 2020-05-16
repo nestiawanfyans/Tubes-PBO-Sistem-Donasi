@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.SQLException;
 
-public class connection {
+public class koneksi {
 
     public static Connection con; // drive connection
     public static Statement stm; // con.createStatement();

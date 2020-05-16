@@ -9,6 +9,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+
+import java.net.ConnectException;
+import java.sql.Connection;
+
 import static javafx.scene.text.FontWeight.*;
 
 public class Daftar extends Application{
@@ -91,11 +95,23 @@ public class Daftar extends Application{
         Login login = new Login();
 
         nextBtn.setOnAction(actionEvent -> {
-            setNama(txtNama.getText());
-            setUsername(txtUser.getText());
-            setPassword(passUser.getText());
 
+            //data
+            String nama         = txtNama.getText();
+            String username     = txtUser.getText();
+            String email        = txtEmail.getText();
+            String pass         = passUser.getText();
+
+            //try sending data to login file.
+            setNama(nama);
+            setUsername(username);
+            setPassword(pass);
             login.sendData(getNama(),getUsername(),getPassword());
+
+            // insert data in database. DriverCOnnection - stm;
+            koneksi koneksiQuery = new koneksi();
+            koneksiQuery.createUser(nama, username, email, pass);
+
             label.setText("Data Sudah terisi, Silahkan Login!" + "Nama : " + txtNama.getText() + " User : " + txtUser.getText() + " Email : " + txtEmail.getText() +" Pass : " + passUser.getText());
 
             label.setTextFill(Color.GREEN);
