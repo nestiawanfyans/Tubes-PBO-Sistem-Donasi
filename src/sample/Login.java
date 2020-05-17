@@ -10,13 +10,28 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-import static javafx.scene.text.FontWeight.*;
+import static javafx.scene.text.FontWeight.LIGHT;
+import static javafx.scene.text.FontWeight.MEDIUM;
 
 class Login{
+    String sql;
+    Connection con;
+    Statement stat;
+    ResultSet rs;
+
     private String checkUser, checkPW;
     private String nama,username,password;
+
+    public Login(){
+        Koneksi DB = new Koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
+    }
 
     public void sendData(String nama, String username,String password){
         this.nama = nama;
@@ -65,17 +80,40 @@ class Login{
 
 //        Back-End Start
         HalamanUtama halamanUtama = new HalamanUtama();
-        nextBtn.setOnAction(actionEvent -> {
-            checkUser = txtUser.getText();
-            checkPW = passUser.getText();
+        Alert alertBtn =new Alert(Alert.AlertType.NONE,"",ButtonType.OK);
 
-            if(checkUser.equals(username) && checkPW.equals(password)){
-                label.setText("Login Sukses!");
-                label.setTextFill(Color.GREEN);
-                halamanUtama.start(primaryStage);
-            }else{
-                label.setText("Login Gagal!");
-                label.setTextFill(Color.RED);
+        nextBtn.setOnAction(actionEvent -> {
+//            checkUser = txtUser.getText();
+//            checkPW = passUser.getText();
+//
+//            if(checkUser.equals(username) && checkPW.equals(password)){
+//                label.setText("Login Sukses!");
+//                label.setTextFill(Color.GREEN);
+//                halamanUtama.start(primaryStage);
+//            }else{
+//                label.setText("Login Gagal!");
+//                label.setTextFill(Color.RED);
+//            }
+
+            try{
+                sql = "SELECT * FROM user WHERE username='"+txtUser.getText()+"' AND password='"+passUser.getText()+"'";
+                rs = stat.executeQuery(sql);
+
+                if (rs.next()){
+                    if (txtUser.getText().equals(rs.getString("username")) && passUser.getText().equals(rs.getString("password"))){
+                        alertBtn.setTitle("Informasi");
+                        alertBtn.setContentText("Login Berhasil!");
+                        alertBtn.show();
+                        halamanUtama.start(primaryStage);
+                    }else{
+                        label.setText("Login Gagal!");
+                        label.setTextFill(Color.RED);
+                    }
+                }
+            }catch(Exception e) {
+                alertBtn.setTitle("Informasi");
+                alertBtn.setContentText("Username atau Password Salah!");
+                alertBtn.show();
             }
             grid.add(label,0,12);
         });

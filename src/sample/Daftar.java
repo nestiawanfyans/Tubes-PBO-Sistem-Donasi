@@ -7,13 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.net.ConnectException;
-import java.sql.Connection;
-
-import static javafx.scene.text.FontWeight.*;
+import static javafx.scene.text.FontWeight.LIGHT;
+import static javafx.scene.text.FontWeight.MEDIUM;
 
 public class Daftar extends Application{
     private String nama;
@@ -94,6 +93,7 @@ public class Daftar extends Application{
 
 //        Back-End Start
         Login login = new Login();
+        Alert alertBtn =new Alert(Alert.AlertType.NONE,"",ButtonType.OK);
 
         nextBtn.setOnAction(actionEvent -> {
             //data
@@ -107,16 +107,16 @@ public class Daftar extends Application{
             koneksiQuery.createUser(nama, username, email, pass);
 
             // get Message success or fail in insert data.
-            label.setText(koneksiQuery.messageCreateUser());
-            label.setTextFill(Color.GREEN);
-            grid.add(label,0,12);
+            alertBtn.setTitle("Informasi");
+            alertBtn.setContentText(koneksiQuery.messageCreateUser());
+            alertBtn.show();
         });
 
         link.setOnAction(actionEvent -> login.start(primaryStage));
 //        End of back-End
-
         Scene scene = new Scene(grid, 800,400);
         primaryStage.setScene(scene);
+
         primaryStage.show();
     }
 }

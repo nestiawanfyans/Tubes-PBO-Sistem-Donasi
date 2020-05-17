@@ -16,10 +16,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class DetailDonasi extends Application {
     Stage window;
@@ -38,7 +36,7 @@ public class DetailDonasi extends Application {
 
         DataDonasi dataDonasi = new DataDonasi();
         ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("C:/Users/sraff/Downloads/Other File/dic7frw54wd41.png"));
+        Image img = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
 
         Label label = new Label();
         label.setText("Donasi Berkah");
@@ -49,8 +47,8 @@ public class DetailDonasi extends Application {
         grid.add(label,0,0);
 
         imageView.setImage(img);
-        imageView.setFitWidth(720);
-        imageView.setFitHeight(405);
+        imageView.setFitWidth(400);
+        imageView.setFitHeight(250);
         grid.add(imageView,0,2,1,1);
 
         Label donasiTitle = new Label();
