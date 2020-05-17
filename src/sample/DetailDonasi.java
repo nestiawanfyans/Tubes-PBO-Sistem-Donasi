@@ -16,8 +16,10 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class DetailDonasi extends Application {
     Stage window;
@@ -36,7 +38,7 @@ public class DetailDonasi extends Application {
 
         DataDonasi dataDonasi = new DataDonasi();
         ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
+        Image img = new Image(new FileInputStream("C:/Users/sraff/Downloads/Other File/dic7frw54wd41.png"));
 
         Label label = new Label();
         label.setText("Donasi Berkah");
@@ -47,8 +49,8 @@ public class DetailDonasi extends Application {
         grid.add(label,0,0);
 
         imageView.setImage(img);
-        imageView.setFitWidth(400);
-        imageView.setFitHeight(250);
+        imageView.setFitWidth(720);
+        imageView.setFitHeight(405);
         grid.add(imageView,0,2,1,1);
 
         Label donasiTitle = new Label();
@@ -94,19 +96,6 @@ public class DetailDonasi extends Application {
                 "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages," +
                 "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
         grid.add(textArea,0,12);
-
-        Label textArea2 = new Label();
-        textArea2.setWrapText(true);
-        textArea2.setFont(Font.font("Quicksand",FontWeight.LIGHT,16));
-        textArea2.setLineSpacing(1.5);
-        textArea2.setAlignment(Pos.CENTER);
-        textArea2.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-                "when an unknown printer took a galley of type and scrambled it to make a type specimen book." +
-                "It has survived not only five centuries, but also the leap into electronic typesetting," +
-                "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages," +
-                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-        grid.add(textArea2,0,14);
 
 
         Scene scene = new Scene(grid, 960,1024);
