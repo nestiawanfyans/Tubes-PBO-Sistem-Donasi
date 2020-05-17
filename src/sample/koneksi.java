@@ -1,10 +1,13 @@
 package sample;
 
 import com.mysql.jdbc.Driver;
+
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class koneksi {
 
@@ -13,6 +16,7 @@ public class koneksi {
 
     //message
     boolean isMessageCreateUser = false;
+    boolean isMessageCreateDonation = false;
 
     // drive connection setup
     public static void driveConnection() throws SQLException {
@@ -61,6 +65,31 @@ public class koneksi {
             return "Data Berhasil ditambahakan, Silakan lakukan login...";
         } else {
             return "Terjadi Kesalahan pada Pendataan User : ";
+        }
+    }
+
+    public void createDonation(String title, String penyelenggara, int targetDonasi, LocalDate targetHari, String deskripsi){
+        try {
+            driveConnection();
+
+            stm=con.createStatement();
+            stm.executeUpdate("INSERT INTO datadonasi(title, penyelenggara, targetDonasi, masaBerakhir, deskripsi) VALUES" +
+                    "('"+ title +"', '"+ penyelenggara +"', '"+ targetDonasi +"', '"+ targetHari +"', '"+ deskripsi+"')");
+            stm.close();
+
+            this.isMessageCreateDonation = true;
+            System.out.println(messageCreateDonation());
+
+        } catch (Exception e) {
+            System.out.println( messageCreateDonation() + e.getMessage());;
+        }
+    }
+
+    public String messageCreateDonation(){
+        if(this.isMessageCreateDonation){
+            return "Data Donasi Berhasil Ditambahkan";
+        } else {
+            return "Terjadi Kesalahan ";
         }
     }
 

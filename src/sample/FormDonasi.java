@@ -6,20 +6,63 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.time.LocalDate;
 
 import static javafx.scene.text.FontWeight.LIGHT;
 import static javafx.scene.text.FontWeight.MEDIUM;
 
 public class FormDonasi extends Application {
     Stage window;
+    private String title;
+    private String penyelenggara;
+    private int targetDonasi;
+    private int targetHari;
+    private String deskripsi;
+
+    public static void main(String[] args){launch();}
+    public void setTitle(String title){
+        this.title=title;
+    }
+    public void setPenyelenggara(String penyelenggara){
+        this.penyelenggara = penyelenggara;
+    }
+    public void setTargetDonasi(int targetDonasi){
+        this.targetDonasi = targetDonasi;
+    }
+    public void  setTargetHari(int targetHari){
+        this.targetHari = targetHari;
+    }
+    public void setDeskripsi(String deskripsi){
+        this.deskripsi = deskripsi;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+    public String getPenyelenggara(){
+        return this.penyelenggara;
+    }
+    public int getTargetDonasi(){
+        return this.targetDonasi;
+    }
+    public int getTargetHari(){
+        return this.targetHari;
+    }
+    public String getDeskripsi(){
+        return this.deskripsi;
+    }
+
     public void start(Stage primaryStage){
         window = primaryStage;
         window.setTitle("Donasi Berkah");
 
+        final Label label = new Label();
 //        GridPane
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
@@ -44,28 +87,57 @@ public class FormDonasi extends Application {
         txtJudul.setPromptText("Judul Donasi ");
         grid.add(txtJudul,0,5);
 
-        TextField penyelenggara = new TextField();
-        penyelenggara.setPromptText("Penyelenggara");
-        grid.add(penyelenggara, 0, 6);
+        TextField txtPenyelenggara = new TextField();
+        txtPenyelenggara.setPromptText("Penyelenggara");
+        grid.add(txtPenyelenggara, 0, 6);
 
-        TextField targetDonasi = new TextField();
-        targetDonasi.setPromptText("Target Donasi");
-        grid.add(targetDonasi, 0, 7);
+        TextField txtTargetDonasi = new TextField();
+        txtTargetDonasi.setPromptText("Target Donasi");
+        grid.add(txtTargetDonasi, 0, 7);
+//        int tgtDonasi   = Integer.parseInt(String.valueOf(txtTargetDonasi));
 
-        TextField targetHari = new TextField();
-        targetHari.setPromptText("Lama Mencari Donasi (Dalam Hari)");
-        grid.add(targetHari, 0, 8);
+        DatePicker picker =new DatePicker();
+        HBox hBox = new HBox(picker);
+        picker.setPromptText("Lama Mencari Donasi");
 
-        TextArea deskripsi = new TextArea();
-        deskripsi.setPromptText("Deskripsi Donasi");
-        deskripsi.setWrapText(true);
-        grid.add(deskripsi,0,9);
+        grid.add(hBox,0,8);
+
+        TextArea txtDeskripsi = new TextArea();
+        txtDeskripsi.setPromptText("Deskripsi Donasi");
+        txtDeskripsi.setWrapText(true);
+        grid.add(txtDeskripsi,0,10);
 
         Button nextBtn = new Button("Lanjut Berdonasi");
         nextBtn.setMaxHeight(200);
         nextBtn.setMaxWidth(500);
         nextBtn.setStyle("-fx-background-color: #00FF00; ");
-        grid.add(nextBtn, 0,10);
+        grid.add(nextBtn, 0,11);
+//        End of Media content
+
+//      Back-End Start
+        nextBtn.setOnAction(actionEvent ->{
+//            tgtDonasi               = tgtDonasi.get
+            int tgtDonasi           = Integer.parseInt(txtTargetDonasi.getText());
+            LocalDate value         = picker.getValue();
+            String title            = txtJudul.getText();
+            String penyelenggara    = txtPenyelenggara.getText();
+            String deskripsi        = txtDeskripsi.getText();
+
+//            System.out.println(tgtDonasi);
+//            System.out.println(value);
+//            System.out.println(title);
+//            System.out.println(penyelenggara);
+//            System.out.println(deskripsi);
+            koneksi koneksiDonasi = new koneksi();
+            koneksiDonasi.createDonation(title,penyelenggara, tgtDonasi, value,deskripsi);
+
+            label.setText(koneksiDonasi.messageCreateDonation());
+            label.setTextFill(Color.GREEN);
+            grid.add(label,0,12);
+        });
+
+//        End of Back-end
+
 
         Scene scene = new Scene(grid,800,600);
         window.setScene(scene);
