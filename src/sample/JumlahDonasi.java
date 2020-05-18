@@ -15,13 +15,26 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+
 
 //import java.awt.event.ActionEvent;
 //import java.beans.EventHandler;
 
 public class JumlahDonasi extends Application {
+
+    int id_donasi;
+    int id_user;
+    int jmlhDonasi = 0;
     Stage window;
     String userInput;
+
+    JumlahDonasi(int id_donasi, int id_user){
+        this.id_donasi  = id_donasi;
+        this.id_user    = id_user;
+    }
 
     public static void main(String[] args) { launch(args);}
 
@@ -35,6 +48,17 @@ public class JumlahDonasi extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(10));
+
+        DetailDonasi detailDonasi = new DetailDonasi(this.id_donasi, this.id_user);
+        Hyperlink link = new Hyperlink("Kembali");
+        grid.add(link,0,15);
+        link.setOnAction(actionEvent -> {
+            try {
+                detailDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
 
         Text headingText = new Text("Masukkan Nominal Donasi");
         headingText.setFill(Color.GREEN);
@@ -70,6 +94,7 @@ public class JumlahDonasi extends Application {
                 alertBtn.setTitle("Informasi");
                 alertBtn.setContentText("Donasi Sejumlah "+ nominalButton1.getText()+ " Berhasil");
                 alertBtn.show();
+                jmlhDonasi = Integer.parseInt(nominalButton1.getText());
             }
         });
         nominalButton2.setOnAction(new EventHandler<ActionEvent>() {
@@ -78,6 +103,7 @@ public class JumlahDonasi extends Application {
                 alertBtn.setTitle("Informasi");
                 alertBtn.setContentText("Donasi Sejumlah "+ nominalButton2.getText()+ " Berhasil");
                 alertBtn.show();
+                jmlhDonasi = Integer.parseInt(nominalButton2.getText());
             }
         });
         nominalButton3.setOnAction(new EventHandler<ActionEvent>() {
@@ -86,6 +112,7 @@ public class JumlahDonasi extends Application {
                 alertBtn.setTitle("Informasi");
                 alertBtn.setContentText("Donasi Sejumlah "+ nominalButton3.getText()+ " Berhasil");
                 alertBtn.show();
+                jmlhDonasi = Integer.parseInt(nominalButton3.getText());
             }
         });
         nominalButton4.setOnAction(new EventHandler<ActionEvent>() {
@@ -94,6 +121,7 @@ public class JumlahDonasi extends Application {
                 alertBtn.setTitle("Informasi");
                 alertBtn.setContentText("Donasi Sejumlah "+ nominalButton4.getText()+ " Berhasil");
                 alertBtn.show();
+                jmlhDonasi = Integer.parseInt(nominalButton4.getText());
             }
         });
         nominalButton5.setOnAction(new EventHandler<ActionEvent>() {
@@ -102,6 +130,7 @@ public class JumlahDonasi extends Application {
                 alertBtn.setTitle("Informasi");
                 alertBtn.setContentText("Donasi Sejumlah "+ nominalButton5.getText()+ " Berhasil");
                 alertBtn.show();
+                jmlhDonasi = Integer.parseInt(nominalButton5.getText());
             }
         });
         nominalButton6.setOnAction(new EventHandler<ActionEvent>() {
@@ -110,9 +139,14 @@ public class JumlahDonasi extends Application {
                 alertBtn.setTitle("Informasi");
                 alertBtn.setContentText("Donasi Sejumlah "+ nominalButton6.getText()+ " Berhasil");
                 alertBtn.show();
+                jmlhDonasi = Integer.parseInt(nominalButton6.getText());
             }
         });
         //End of Back-End Button
+
+        if(jmlhDonasi != 0){
+
+        }
 
         Text text =new Text("Masukkan Nominal Donasi Lain :");
         text.setFont(Font.font("Quicksand",FontWeight.LIGHT,14));
@@ -154,4 +188,5 @@ public class JumlahDonasi extends Application {
         window.show();
 
     }
+
 }

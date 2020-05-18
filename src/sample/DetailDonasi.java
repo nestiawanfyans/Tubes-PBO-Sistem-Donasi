@@ -1,10 +1,13 @@
 package sample;
 
+import com.mysql.jdbc.Driver;
+import com.sun.javafx.menu.MenuItemBase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,16 +23,38 @@ import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.*;
 
 public class DetailDonasi extends Application {
 
-    int id;
+    int id_donasi;
+    int id_user;
+    Stage window;
 
-    DetailDonasi(int id){
-        this.id = id;
+    DetailDonasi(int id_donasi, int id_user){
+        this.id_donasi  = id_donasi;
+        this.id_user    = id_user;
     }
 
-    Stage window;
+    HalamanUtama hUtama = new HalamanUtama(this.id_user);
+
+
+    public static Connection con; // drive connection
+    public static Statement stm; // con.createStatement();
+    public static ResultSet result;
+
+    public static void driveConnection() throws SQLException {
+
+        // Data setup to Database
+        String url  = "jdbc:mysql://localhost/donasi-tubes-pbo";
+        String user = "root";
+        String pass = "";
+
+        if(con == null) {
+            new Driver();
+            con = DriverManager.getConnection(url, user, pass);
+        }
+    }
 
     public static void main(String[] args) { launch(args);}
 
@@ -43,67 +68,92 @@ public class DetailDonasi extends Application {
         grid.setVgap(5);
         grid.setPadding(new Insets(10));
 
-        DataDonasi dataDonasi = new DataDonasi();
-        ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("/media/nestiawanfyan/Full Data/Minimalist IMages/214601.png"));
+        Hyperlink link = new Hyperlink("Halaman Utama");
+        grid.add(link,0,15);
+        link.setOnAction(actionEvent -> {
+            try {
+                hUtama.start(primaryStage);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
-        Label label = new Label();
-        label.setText("Donasi Berkah");
-        label.setFont(Font.font("Quicksand", FontWeight.MEDIUM, 25));
-        label.setTextFill(Color.GREEN);
-        label.setAlignment(Pos.TOP_LEFT);
-        label.setTextAlignment(TextAlignment.LEFT);
-        grid.add(label,0,0);
+        try {
 
-        imageView.setImage(img);
-        imageView.setFitWidth(720);
-        imageView.setFitHeight(405);
-        grid.add(imageView,0,2,1,1);
+            driveConnection();
+            stm = con.createStatement();
+            result = stm.executeQuery("select * from dataDonasi where id='" + this.id_donasi + "'");
 
-        Label donasiTitle = new Label();
-        donasiTitle.setText(dataDonasi.getJudulDonasi());
-        donasiTitle.setFont(Font.font("Quicksand",FontWeight.MEDIUM,24));
-        grid.add(donasiTitle,0,3);
+            Button bayardonasi = null;
+            while (result.next()) {
+                DataDonasi dataDonasi = new DataDonasi();
+                ImageView imageView = new ImageView();
+                Image img = new Image(new FileInputStream("/media/nestiawanfyan/Full Data/Minimalist IMages/214601.png"));
 
-        Label donasiPenyelenggara = new Label();
-        donasiPenyelenggara.setText(dataDonasi.getPenyelenggara());
-        donasiPenyelenggara.setTextFill(Color.SILVER);
-        donasiPenyelenggara.setFont(Font.font("Quicksand",FontWeight.LIGHT,16));
-        grid.add(donasiPenyelenggara,0,4);
+                Label label = new Label();
+                label.setText("Donasi Berkah");
+                label.setFont(Font.font("Quicksand", FontWeight.MEDIUM, 25));
+                label.setTextFill(Color.GREEN);
+                label.setAlignment(Pos.TOP_LEFT);
+                label.setTextAlignment(TextAlignment.LEFT);
+                grid.add(label, 0, 0);
+
+                imageView.setImage(img);
+                imageView.setFitWidth(420);
+                imageView.setFitHeight(305);
+                grid.add(imageView, 0, 2, 1, 1);
+
+                Label donasiTitle = new Label();
+                donasiTitle.setText(result.getString(2));
+                donasiTitle.setFont(Font.font("Quicksand", FontWeight.MEDIUM, 24));
+                grid.add(donasiTitle, 0, 3);
+
+                Label donasiPenyelenggara = new Label();
+                donasiPenyelenggara.setText(result.getString(3));
+                donasiPenyelenggara.setTextFill(Color.SILVER);
+                donasiPenyelenggara.setFont(Font.font("Quicksand", FontWeight.LIGHT, 16));
+                grid.add(donasiPenyelenggara, 0, 4);
 
 
-        Text donasiDana = new Text();
-        donasiDana.setText("Rp. "+ dataDonasi.getDanaTerkumpul().toString() + "\t Target\t" + dataDonasi.getDanaTarget().toString());
-        grid.add(donasiDana,0,5);
+                Text donasiDana = new Text();
+                donasiDana.setText("Rp. " + dataDonasi.getDanaTerkumpul().toString() + "\t Target\t" + result.getString(4).toString());
+                grid.add(donasiDana, 0, 5);
 
-        Text DeadlineDonasi = new Text();
-        DeadlineDonasi.setText(dataDonasi.getTargethari() + " Hari Lagi");
-        grid.add(DeadlineDonasi,0,7);
+                Text DeadlineDonasi = new Text();
+                DeadlineDonasi.setText(result.getString(5));
+                grid.add(DeadlineDonasi, 0, 7);
 
-        Button donasiBtn = new Button("Donasi Sekarang");
-        donasiBtn.setAlignment(Pos.CENTER);
-        donasiBtn.setMaxWidth(300);
-        donasiBtn.setStyle("-fx-background-color: #00FF00; ");
-        grid.add(donasiBtn,0,6);
+                bayardonasi = new Button("Donasi Sekarang");
+                bayardonasi.setAlignment(Pos.CENTER);
+                bayardonasi.setMaxWidth(300);
+                bayardonasi.setStyle("-fx-background-color: #00FF00; ");
+                grid.add(bayardonasi, 0, 6);
 
-        Text Deskripsi = new Text();
-        Deskripsi.setText("Deskripsi");
-        Deskripsi.setFont(Font.font("Quicksand",FontWeight.MEDIUM,24));
-        grid.add(Deskripsi,0,10);
+                Text Deskripsi = new Text();
+                Deskripsi.setText("Deskripsi");
+                Deskripsi.setFont(Font.font("Quicksand", FontWeight.MEDIUM, 24));
+                grid.add(Deskripsi, 0, 10);
 
-        Label textArea = new Label();
-        textArea.setWrapText(true);
-        textArea.setFont(Font.font("Quicksand",FontWeight.LIGHT,16));
-        textArea.setLineSpacing(1.5);
-        textArea.setAlignment(Pos.CENTER);
-        textArea.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry." +
-                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-                "when an unknown printer took a galley of type and scrambled it to make a type specimen book." +
-                "It has survived not only five centuries, but also the leap into electronic typesetting," +
-                "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages," +
-                "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-        grid.add(textArea,0,12);
+                Label textArea = new Label();
+                textArea.setWrapText(true);
+                textArea.setFont(Font.font("Quicksand", FontWeight.LIGHT, 16));
+                textArea.setLineSpacing(1.5);
+                textArea.setAlignment(Pos.CENTER);
+                textArea.setText(result.getString(6));
+                grid.add(textArea, 0, 12);
+            }
 
+            bayardonasi.setOnAction(actionEvent -> {
+                JumlahDonasi bayarDonasi = new JumlahDonasi(this.id_donasi, this.id_user);
+                bayarDonasi.start(primaryStage);
+            });
+
+
+        }catch (Exception e) {
+            System.err.println("Error Detail Donasi : " + e.getMessage());
+        }
 
         Scene scene = new Scene(grid, 960,1024);
         window.setScene(scene);

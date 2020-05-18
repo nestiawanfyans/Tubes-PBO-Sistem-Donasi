@@ -16,6 +16,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,6 +27,12 @@ import java.time.LocalDate;
 
 
 public class HalamanUtama extends Application{
+
+    int id_user = 1;
+
+    HalamanUtama(int id_user){
+        this.id_user = id_user;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -50,6 +58,8 @@ public class HalamanUtama extends Application{
     public void start(Stage primaryStage) throws SQLException, IOException {
         primaryStage.setTitle("Donasi Berkah");
         final Label label = new Label();
+
+        System.out.println("Usern ID : " + this.id_user);
 
 //        GridPane
         GridPane grid = new GridPane();
@@ -111,10 +121,10 @@ public class HalamanUtama extends Application{
                 donasiSatuHari.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
                 grid.add(donasiSatuHari,number,7);
 
-                int id =  Integer.parseInt(result.getString(1));
+                int id_donasi =  Integer.parseInt(result.getString(1));
                 donasiSatuBtn.setOnAction(actionEvent -> {
 
-                    DetailDonasi dDonasi = new DetailDonasi(id);
+                    DetailDonasi dDonasi = new DetailDonasi(id_donasi, this.id_user);
                     try {
                         dDonasi.start(primaryStage);
                     } catch (FileNotFoundException e) {

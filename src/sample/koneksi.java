@@ -16,6 +16,7 @@ public class koneksi {
     //message
     boolean isMessageCreateUser = false;
     boolean isMessageCreateDonation = false;
+    boolean osMessageinsertJumlahDonasi = false;
 
     // drive connection setup
     public static void driveConnection() throws SQLException {
@@ -93,6 +94,33 @@ public class koneksi {
 
     }
 
+    public void config() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/donasi-tubes-pbo", "root","");
+            stm = con.createStatement();
+        } catch (Exception e) {
+            System.err.println("Koneksi Gagal");
+        }
+    }
+
+    public void insertJumlahDonasi(int id_donasi, int id_user, int jumlahDonasi){
+        try {
+            driveConnection();
+
+            stm=con.createStatement();
+            stm.executeUpdate("INSERT INTO bayarDonasi(id_user, id_donasi, jumlahDonasi) VALUES ('"+ id_user +"', '"+ id_donasi +"', '"+ jumlahDonasi +"')");
+            stm.close();
+
+            this.osMessageinsertJumlahDonasi = true;
+            System.out.println(messageinsertJumlahDonasi());
+
+        } catch (Exception e) {
+            System.out.println( messageCreateDonation() + e.getMessage());;
+        }
+        }
+    }
+
     //message
     public String messageCreateUser() {
         if(this.isMessageCreateUser){
@@ -106,17 +134,16 @@ public class koneksi {
         if(this.isMessageCreateDonation){
             return "Data Donasi Berhasil Ditambahkan";
         } else {
-            return "Terjadi Kesalahan ";
+            return "Terjadi Kesalahan : ";
         }
     }
 
-    public void config() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/donasi-tubes-pbo", "root","");
-            stm = con.createStatement();
-        } catch (Exception e) {
-            System.err.println("Koneksi Gagal");
+    public String messageinsertJumlahDonasi(){
+        if(this.osMessageinsertJumlahDonasi){
+            return "Berhasil Berdonasi";
+        } else {
+            return "Terjadi Kesalahan : ";
         }
     }
+
 }
