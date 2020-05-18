@@ -12,6 +12,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static javafx.scene.text.FontWeight.LIGHT;
@@ -78,6 +80,10 @@ public class FormDonasi extends Application {
         headingtext.setFill(Color.GREEN);
         grid.add(headingtext, 0,0);
 
+//        Hyperlink link = new Hyperlink("Kembali....");
+//        grid.add(link,0,14);
+//        link.setOnAction(actionEvent -> halamUtama.start(primaryStage));
+
         Text text = new Text("\t\t\tMasukkan Data Donasi Anda");
         text.setFont(Font.font("Tahoma", LIGHT, 16));
         text.setFill(Color.GREEN);
@@ -130,14 +136,12 @@ public class FormDonasi extends Application {
 //            System.out.println(deskripsi);
             koneksi koneksiDonasi = new koneksi();
             koneksiDonasi.createDonation(title,penyelenggara, tgtDonasi, value,deskripsi);
-
             label.setText(koneksiDonasi.messageCreateDonation());
             label.setTextFill(Color.GREEN);
             grid.add(label,0,12);
         });
 
 //        End of Back-end
-
 
         Scene scene = new Scene(grid,800,600);
         window.setScene(scene);

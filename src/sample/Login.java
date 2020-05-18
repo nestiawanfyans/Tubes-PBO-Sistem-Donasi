@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import static javafx.application.Application.launch;
 import static javafx.scene.text.FontWeight.LIGHT;
 import static javafx.scene.text.FontWeight.MEDIUM;
 
@@ -25,9 +26,10 @@ class Login{
 
     private String checkUser, checkPW;
     private String nama,username,password;
+    public static void main(String[] args){launch();}
 
     public Login(){
-        Koneksi DB = new Koneksi();
+        koneksi DB = new koneksi();
         DB.config();
         con = DB.con;
         stat = DB.stm;

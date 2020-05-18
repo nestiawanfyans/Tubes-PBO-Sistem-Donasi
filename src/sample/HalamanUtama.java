@@ -1,9 +1,12 @@
 package sample;
 
+import com.mysql.jdbc.Driver;
+import com.mysql.jdbc.util.ResultSetUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,15 +17,37 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.*;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+
 
 public class HalamanUtama extends Application{
 
     public static void main(String[] args) {
         launch(args);
     }
+    public static Connection con; // drive connection
+    public static Statement stm; // con.createStatement();
+    public static ResultSet result;
+    FormDonasi formDonasi = new FormDonasi();
 
-    public void start(Stage primaryStage) throws IOException {
+    public static void driveConnection() throws SQLException {
+
+        // Data setup to Database
+        String url  = "jdbc:mysql://localhost/donasi-tubes-pbo";
+        String user = "root";
+        String pass = "";
+
+        if(con == null) {
+            new Driver();
+            con = DriverManager.getConnection(url, user, pass);
+        }
+    }
+
+    public void start(Stage primaryStage) throws SQLException, IOException {
         primaryStage.setTitle("Donasi Berkah");
         final Label label = new Label();
 
@@ -41,77 +66,72 @@ public class HalamanUtama extends Application{
         grid.add(label,1,0);
 //        End of Header
 
-//        Donasi satu
-        DataDonasi donasiSatu = new DataDonasi();
-        final ImageView selectedImage = new ImageView();
-        Image image1 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
-        Label donasiSatuJudul = new Label();
-        Text donasiSatuPenyelenggara = new Text();
-        Text donasiSatuDana = new Text();
-        Text donasiSatuHari = new Text();
-        Button donasiSatuBtn = new Button("Donasi");
+        Hyperlink link = new Hyperlink("Buka Donasi....");
+        grid.add(link,0,1);
+        link.setOnAction(actionEvent -> formDonasi.start(primaryStage));
 
-        selectedImage.setImage(image1);
-        selectedImage.setFitHeight(150);
-        selectedImage.setFitWidth(200);
-        grid.add(selectedImage, 1,1);
+        try {
+            driveConnection();
+            stm = con.createStatement();
+            result = stm.executeQuery("select * from dataDonasi");
+            int number = 1;
+            while (result.next()){
+                //        Donasi satu
+                DataDonasi donasiSatu = new DataDonasi();
+                final ImageView selectedImage = new ImageView();
+                Image image1 = new Image(new FileInputStream("/media/nestiawanfyan/Full Data/Minimalist IMages/214601.png")); //IMG
+                Label donasiSatuJudul = new Label();
+                Text donasiSatuPenyelenggara = new Text();
+                Text donasiSatuDana = new Text();
+                Text donasiSatuHari = new Text();
+                Button donasiSatuBtn = new Button("Donasi");
 
-        donasiSatuJudul.setText(donasiSatu.getJudulDonasi());
-        donasiSatuJudul.setFont(Font.font("Quicksand", FontWeight.LIGHT, 15));
-        donasiSatuJudul.setTextFill(Color.GREEN);
-        grid.add(donasiSatuJudul,1,2);
+                selectedImage.setImage(image1);
+                selectedImage.setFitHeight(150);
+                selectedImage.setFitWidth(200);
+                grid.add(selectedImage, number,2);
 
-        donasiSatuPenyelenggara.setText(donasiSatu.getPenyelenggara());
-        donasiSatuPenyelenggara.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-        grid.add(donasiSatuPenyelenggara,1,3);
+                donasiSatuJudul.setText(result.getString(2));
+                donasiSatuJudul.setFont(Font.font("Quicksand", FontWeight.LIGHT, 15));
+                donasiSatuJudul.setTextFill(Color.GREEN);
+                grid.add(donasiSatuJudul,number,3);
 
-        donasiSatuDana.setText("Rp. " + donasiSatu.getDanaTerkumpul().toString() + " target " + donasiSatu.getDanaTarget().toString());
-        donasiSatuDana.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-        grid.add(donasiSatuDana, 1,4);
+                donasiSatuPenyelenggara.setText(result.getString(3));
+                donasiSatuPenyelenggara.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
+                grid.add(donasiSatuPenyelenggara,number,4);
 
-        donasiSatuBtn.setFont(Font.font("Quicksand",FontWeight.BOLD,12));
-        grid.add(donasiSatuBtn,1,5);
+                donasiSatuDana.setText("Rp. " + donasiSatu.getDanaTerkumpul().toString() + " target " + result.getString(4).toString());
+                donasiSatuDana.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
+                grid.add(donasiSatuDana, number,5);
 
-        donasiSatuHari.setText("\t\t\t\t" + donasiSatu.getTargethari() + " Hari lagi");
-        donasiSatuHari.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-        grid.add(donasiSatuHari,1,5);
+                donasiSatuBtn.setFont(Font.font("Quicksand",FontWeight.BOLD,12));
+                grid.add(donasiSatuBtn,number,6);
+
+                donasiSatuHari.setText("\t\t\t\t" + result.getString(5));
+                donasiSatuHari.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
+                grid.add(donasiSatuHari,number,7);
+
+                int id =  Integer.parseInt(result.getString(1));
+                donasiSatuBtn.setOnAction(actionEvent -> {
+
+                    DetailDonasi dDonasi = new DetailDonasi(id);
+                    try {
+                        dDonasi.start(primaryStage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                });
+
+                number+=19;
 //        End of Donasi Satu
+            }
+            System.out.println("berhasil");
+            stm.close();
 
-//        Donasi Dua
-        DataDonasi donasiDua = new DataDonasi();
-        final ImageView selectedImage2 = new ImageView();
-        Image image2 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
-        Label donasiDuaJudul = new Label();
-        Text donasiDuaPenyelenggara = new Text();
-        Text donasiDuaDana = new Text();
-        Text donasiDuaHari = new Text();
-        Button donasiDuaBtn = new Button("Donasi");
-
-        selectedImage2.setImage(image2);
-        selectedImage2.setFitHeight(150);
-        selectedImage2.setFitWidth(200);
-        grid.add(selectedImage2, 20,1);
-
-        donasiDuaJudul.setText(donasiDua.getJudulDonasi());
-        donasiDuaJudul.setFont(Font.font("Quicksand", FontWeight.LIGHT, 15));
-        donasiDuaJudul.setTextFill(Color.GREEN);
-        grid.add(donasiDuaJudul,20,2);
-
-        donasiDuaPenyelenggara.setText(donasiDua.getPenyelenggara());
-        donasiDuaPenyelenggara.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-        grid.add(donasiDuaPenyelenggara,20,3);
-
-        donasiDuaDana.setText("Rp. " + donasiDua.getDanaTerkumpul().toString() + " target " + donasiDua.getDanaTarget().toString());
-        donasiDuaDana.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-        grid.add(donasiDuaDana, 20,4);
-
-        donasiDuaBtn.setFont(Font.font("Quicksand",FontWeight.BOLD,12));
-        grid.add(donasiDuaBtn,20,5);
-
-        donasiDuaHari.setText("\t\t\t\t" + donasiDua.getTargethari() + " Hari lagi");
-        donasiDuaHari.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-        grid.add(donasiDuaHari,20,5);
-//        End of Donasi Dua
+        } catch (Exception e) {
+            System.err.println("koneksi gagal : " +e.getMessage());
+        }
 
 //        Donasi Tiga
 //        End of donasi Tiga
@@ -124,8 +144,12 @@ public class HalamanUtama extends Application{
 //        Back End Start
 //        End of Back End
 
+
         Scene scene = new Scene(grid, 800,600);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+//        koneksi connect = new koneksi();
+//        connect.dataDonasi();
     }
 }

@@ -22,6 +22,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DetailDonasi extends Application {
+
+    int id;
+
+    DetailDonasi(int id){
+        this.id = id;
+    }
+
     Stage window;
 
     public static void main(String[] args) { launch(args);}
@@ -38,7 +45,7 @@ public class DetailDonasi extends Application {
 
         DataDonasi dataDonasi = new DataDonasi();
         ImageView imageView = new ImageView();
-        Image img = new Image(new FileInputStream("C:/Users/sraff/Downloads/Other File/dic7frw54wd41.png"));
+        Image img = new Image(new FileInputStream("/media/nestiawanfyan/Full Data/Minimalist IMages/214601.png"));
 
         Label label = new Label();
         label.setText("Donasi Berkah");
