@@ -28,11 +28,11 @@ import java.time.LocalDate;
 
 public class HalamanUtama extends Application{
 
-    int id_user = 1;
+    public int id_user = 1;
 
-    HalamanUtama(int id_user){
-        this.id_user = id_user;
-    }
+//    HalamanUtama(int id_user){
+//        this.id_user = id_user;
+//    }
 
     public static void main(String[] args) {
         launch(args);
@@ -123,7 +123,7 @@ public class HalamanUtama extends Application{
 
                 int id_donasi =  Integer.parseInt(result.getString(1));
                 donasiSatuBtn.setOnAction(actionEvent -> {
-
+                    this.id_user = 1;
                     DetailDonasi dDonasi = new DetailDonasi(id_donasi, this.id_user);
                     try {
                         dDonasi.start(primaryStage);

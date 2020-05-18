@@ -36,7 +36,7 @@ public class DetailDonasi extends Application {
         this.id_user    = id_user;
     }
 
-    HalamanUtama hUtama = new HalamanUtama(this.id_user);
+    HalamanUtama hUtama = new HalamanUtama();
 
 
     public static Connection con; // drive connection

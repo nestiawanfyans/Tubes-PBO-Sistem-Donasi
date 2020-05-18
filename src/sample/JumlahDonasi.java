@@ -25,11 +25,12 @@ import java.sql.SQLException;
 
 public class JumlahDonasi extends Application {
 
-    int id_donasi;
-    int id_user;
+    public int id_donasi;
+    public int id_user;
     int jmlhDonasi = 0;
     Stage window;
     String userInput;
+    koneksi connect = new koneksi();
 
     JumlahDonasi(int id_donasi, int id_user){
         this.id_donasi  = id_donasi;
@@ -88,65 +89,31 @@ public class JumlahDonasi extends Application {
 
         //Start of Back-End Button
         Alert alertBtn =new Alert(AlertType.NONE,"",ButtonType.OK);
-        nominalButton1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alertBtn.setTitle("Informasi");
-                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton1.getText()+ " Berhasil");
-                alertBtn.show();
-                jmlhDonasi = Integer.parseInt(nominalButton1.getText());
-            }
+        nominalButton1.setOnAction(actionEvent -> {
+            jmlhDonasi = 0000;
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
         });
-        nominalButton2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alertBtn.setTitle("Informasi");
-                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton2.getText()+ " Berhasil");
-                alertBtn.show();
-                jmlhDonasi = Integer.parseInt(nominalButton2.getText());
-            }
+        nominalButton2.setOnAction(actionEvent -> {
+            jmlhDonasi = 50000;
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
         });
-        nominalButton3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alertBtn.setTitle("Informasi");
-                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton3.getText()+ " Berhasil");
-                alertBtn.show();
-                jmlhDonasi = Integer.parseInt(nominalButton3.getText());
-            }
+        nominalButton3.setOnAction(actionEvent -> {
+            jmlhDonasi = 100000;
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
         });
-        nominalButton4.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alertBtn.setTitle("Informasi");
-                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton4.getText()+ " Berhasil");
-                alertBtn.show();
-                jmlhDonasi = Integer.parseInt(nominalButton4.getText());
-            }
+        nominalButton4.setOnAction(actionEvent -> {
+            jmlhDonasi = 250000;
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
         });
-        nominalButton5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alertBtn.setTitle("Informasi");
-                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton5.getText()+ " Berhasil");
-                alertBtn.show();
-                jmlhDonasi = Integer.parseInt(nominalButton5.getText());
-            }
+        nominalButton5.setOnAction(actionEvent -> {
+            jmlhDonasi = 500000;
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
         });
-        nominalButton6.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                alertBtn.setTitle("Informasi");
-                alertBtn.setContentText("Donasi Sejumlah "+ nominalButton6.getText()+ " Berhasil");
-                alertBtn.show();
-                jmlhDonasi = Integer.parseInt(nominalButton6.getText());
-            }
+        nominalButton6.setOnAction(actionEvent -> {
+            jmlhDonasi = 1000000;
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
         });
         //End of Back-End Button
-
-        if(jmlhDonasi != 0){
-
-        }
 
         Text text =new Text("Masukkan Nominal Donasi Lain :");
         text.setFont(Font.font("Quicksand",FontWeight.LIGHT,14));
@@ -170,18 +137,28 @@ public class JumlahDonasi extends Application {
         grid.add(donasiBtn, 0,12,3,2);
 
         //Start Back-End Donasi Button
-        donasiBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                userInput = nominalInput.getText().toString();
-                Alert alert = new Alert(Alert.AlertType.NONE, " ",ButtonType.OK);
-                alert.setTitle("Informasi");
-                alert.setContentText("Donasi Sejumlah Rp. "+ userInput+ " Berhasil");
-                alert.show();
-
-            }
-        });
+//        donasiBtn.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                userInput = nominalInput.getText().toString();
+//                Alert alert = new Alert(Alert.AlertType.NONE, " ",ButtonType.OK);
+//                alert.setTitle("Informasi");
+//                alert.setContentText("Donasi Sejumlah Rp. "+ userInput+ " Berhasil");
+//                alert.show();
+//            }
+//        });
         //End Back-End Donasi Button
+
+//        donasiBtn.setOnAction(actionEvent -> {
+//            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+//            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user);
+//            try {
+//                dDonasi.start(primaryStage);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        });
+
 
         Scene scene = new Scene(grid, 800,400);
         window.setScene(scene);

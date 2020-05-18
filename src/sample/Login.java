@@ -81,6 +81,7 @@ class Login{
         Label label = new Label();
 
 //        Back-End Start
+        int id_user = 1;
         HalamanUtama halamanUtama = new HalamanUtama();
         Alert alertBtn =new Alert(Alert.AlertType.NONE,"",ButtonType.OK);
 

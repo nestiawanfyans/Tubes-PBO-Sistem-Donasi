@@ -116,8 +116,7 @@ public class koneksi {
             System.out.println(messageinsertJumlahDonasi());
 
         } catch (Exception e) {
-            System.out.println( messageCreateDonation() + e.getMessage());;
-        }
+            System.out.println(messageCreateDonation() + e.getMessage());
         }
     }
 
