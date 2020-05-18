@@ -75,14 +75,24 @@ public class FormDonasi extends Application {
 //        End of Gridpane
 
 //        Media Content
+        HalamanUtama hUtama = new HalamanUtama();
+
         Text headingtext = new Text("\t\t  Donasi Berkah");
         headingtext.setFont(Font.font("Tahoma", MEDIUM, 25));
         headingtext.setFill(Color.GREEN);
         grid.add(headingtext, 0,0);
 
-//        Hyperlink link = new Hyperlink("Kembali....");
-//        grid.add(link,0,14);
-//        link.setOnAction(actionEvent -> halamUtama.start(primaryStage));
+        Hyperlink link = new Hyperlink("Halaman Utama");
+        grid.add(link,0,15);
+        link.setOnAction(actionEvent -> {
+            try {
+                hUtama.start(primaryStage);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Text text = new Text("\t\t\tMasukkan Data Donasi Anda");
         text.setFont(Font.font("Tahoma", LIGHT, 16));
@@ -140,6 +150,7 @@ public class FormDonasi extends Application {
             label.setTextFill(Color.GREEN);
             grid.add(label,0,12);
         });
+
 
 //        End of Back-end
 

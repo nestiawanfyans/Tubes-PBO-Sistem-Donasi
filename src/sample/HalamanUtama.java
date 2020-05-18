@@ -1,7 +1,6 @@
 package sample;
 
 import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.util.ResultSetUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,14 +15,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
-import java.sql.ResultSet;
-import java.time.LocalDate;
 
 
 public class HalamanUtama extends Application{
@@ -76,8 +72,8 @@ public class HalamanUtama extends Application{
         grid.add(label,1,0);
 //        End of Header
 
-        Hyperlink link = new Hyperlink("Buka Donasi....");
-        grid.add(link,0,1);
+        Hyperlink link = new Hyperlink("Buat Donasi");
+        grid.add(link,0,12);
         link.setOnAction(actionEvent -> formDonasi.start(primaryStage));
 
         try {
@@ -89,7 +85,7 @@ public class HalamanUtama extends Application{
                 //        Donasi satu
                 DataDonasi donasiSatu = new DataDonasi();
                 final ImageView selectedImage = new ImageView();
-                Image image1 = new Image(new FileInputStream("/media/nestiawanfyan/Full Data/Minimalist IMages/214601.png")); //IMG
+                Image image1 = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg")); //IMG
                 Label donasiSatuJudul = new Label();
                 Text donasiSatuPenyelenggara = new Text();
                 Text donasiSatuDana = new Text();
@@ -142,18 +138,6 @@ public class HalamanUtama extends Application{
         } catch (Exception e) {
             System.err.println("koneksi gagal : " +e.getMessage());
         }
-
-//        Donasi Tiga
-//        End of donasi Tiga
-
-//        Donasi Empat
-//        End of Donasi Empat
-
-//        End of media Content
-
-//        Back End Start
-//        End of Back End
-
 
         Scene scene = new Scene(grid, 800,600);
         primaryStage.setScene(scene);

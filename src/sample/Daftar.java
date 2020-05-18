@@ -42,7 +42,7 @@ public class Daftar extends Application{
     }
 
     public void start(Stage primaryStage){
-        primaryStage.setTitle("Donasi Berkah");
+        primaryStage.setTitle("Donasi B erkah");
 
         final Label label = new Label();
 //        GridPane

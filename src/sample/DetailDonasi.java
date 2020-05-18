@@ -1,12 +1,13 @@
 package sample;
 
 import com.mysql.jdbc.Driver;
-import com.sun.javafx.menu.MenuItemBase;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,7 +18,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class DetailDonasi extends Application {
             while (result.next()) {
                 DataDonasi dataDonasi = new DataDonasi();
                 ImageView imageView = new ImageView();
-                Image img = new Image(new FileInputStream("/media/nestiawanfyan/Full Data/Minimalist IMages/214601.png"));
+                Image img = new Image(new FileInputStream("/home/dhannypramana/Downloads/pemulung.jpg"));
 
                 Label label = new Label();
                 label.setText("Donasi Berkah");
