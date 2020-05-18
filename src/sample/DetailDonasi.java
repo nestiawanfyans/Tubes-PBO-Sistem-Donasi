@@ -6,9 +6,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -29,14 +27,17 @@ public class DetailDonasi extends Application {
 
     int id_donasi;
     int id_user;
+    boolean success;
     Stage window;
 
-    DetailDonasi(int id_donasi, int id_user){
+    DetailDonasi(int id_donasi, int id_user, boolean success){
         this.id_donasi  = id_donasi;
         this.id_user    = id_user;
+        this.success    = success;
     }
 
     HalamanUtama hUtama = new HalamanUtama();
+    koneksi connect = new koneksi();
 
 
     public static Connection con; // drive connection
@@ -66,6 +67,7 @@ public class DetailDonasi extends Application {
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
         grid.setVgap(5);
+        grid.setVgap(10);
         grid.setPadding(new Insets(10));
 
         Hyperlink link = new Hyperlink("Halaman Utama");
@@ -79,6 +81,14 @@ public class DetailDonasi extends Application {
                 e.printStackTrace();
             }
         });
+
+        if(this.success != false){
+            Text alertBerhasilDOnasi = new Text();
+            alertBerhasilDOnasi.setText("Berhasil Berdonasi");
+            alertBerhasilDOnasi.setFont(Font.font("Quicksand", FontWeight.MEDIUM, 24));
+            grid.add(alertBerhasilDOnasi, 0, 16);
+            this.success = false;
+        }
 
         try {
 
@@ -101,8 +111,8 @@ public class DetailDonasi extends Application {
                 grid.add(label, 0, 0);
 
                 imageView.setImage(img);
-                imageView.setFitWidth(420);
-                imageView.setFitHeight(305);
+                imageView.setFitWidth(350);
+                imageView.setFitHeight(255);
                 grid.add(imageView, 0, 2, 1, 1);
 
                 Label donasiTitle = new Label();

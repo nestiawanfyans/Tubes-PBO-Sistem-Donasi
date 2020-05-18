@@ -27,6 +27,7 @@ public class JumlahDonasi extends Application {
 
     public int id_donasi;
     public int id_user;
+    public boolean success = false;
     int jmlhDonasi = 0;
     Stage window;
     String userInput;
@@ -50,7 +51,7 @@ public class JumlahDonasi extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(10));
 
-        DetailDonasi detailDonasi = new DetailDonasi(this.id_donasi, this.id_user);
+        DetailDonasi detailDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
         Hyperlink link = new Hyperlink("Kembali");
         grid.add(link,0,15);
         link.setOnAction(actionEvent -> {
@@ -92,26 +93,68 @@ public class JumlahDonasi extends Application {
         nominalButton1.setOnAction(actionEvent -> {
             jmlhDonasi = 0000;
             connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            this.success = true;
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         nominalButton2.setOnAction(actionEvent -> {
             jmlhDonasi = 50000;
             connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            this.success = true;
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         nominalButton3.setOnAction(actionEvent -> {
             jmlhDonasi = 100000;
             connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            this.success = true;
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         nominalButton4.setOnAction(actionEvent -> {
             jmlhDonasi = 250000;
             connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            this.success = true;
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         nominalButton5.setOnAction(actionEvent -> {
             jmlhDonasi = 500000;
             connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            this.success = true;
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         nominalButton6.setOnAction(actionEvent -> {
             jmlhDonasi = 1000000;
             connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            this.success = true;
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         //End of Back-End Button
 
@@ -149,15 +192,18 @@ public class JumlahDonasi extends Application {
 //        });
         //End Back-End Donasi Button
 
-//        donasiBtn.setOnAction(actionEvent -> {
-//            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
-//            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user);
-//            try {
-//                dDonasi.start(primaryStage);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        });
+        donasiBtn.setOnAction(actionEvent -> {
+            this.jmlhDonasi = Integer.parseInt(nominalInput.getText());
+            this.success = true;
+
+            connect.insertJumlahDonasi(this.id_donasi, this.id_user, this.jmlhDonasi);
+            DetailDonasi dDonasi = new DetailDonasi(this.id_donasi, this.id_user, this.success);
+            try {
+                dDonasi.start(primaryStage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
 
 
         Scene scene = new Scene(grid, 800,400);

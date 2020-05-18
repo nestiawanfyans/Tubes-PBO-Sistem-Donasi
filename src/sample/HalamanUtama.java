@@ -124,7 +124,7 @@ public class HalamanUtama extends Application{
                 int id_donasi =  Integer.parseInt(result.getString(1));
                 donasiSatuBtn.setOnAction(actionEvent -> {
                     this.id_user = 1;
-                    DetailDonasi dDonasi = new DetailDonasi(id_donasi, this.id_user);
+                    DetailDonasi dDonasi = new DetailDonasi(id_donasi, this.id_user, false);
                     try {
                         dDonasi.start(primaryStage);
                     } catch (FileNotFoundException e) {
