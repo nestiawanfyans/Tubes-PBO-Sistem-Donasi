@@ -69,18 +69,22 @@ public class HalamanUtama extends Application{
         label.setText("Donasi Berkah\n\n");
         label.setFont(Font.font("Quicksand", FontWeight.BOLD, 24));
         label.setTextFill(Color.GREEN);
-        grid.add(label,1,0);
+        grid.add(label,0,0);
 //        End of Header
 
         Hyperlink link = new Hyperlink("Buat Donasi");
-        grid.add(link,0,12);
+        grid.add(link,0,1);
         link.setOnAction(actionEvent -> formDonasi.start(primaryStage));
+
 
         try {
             driveConnection();
             stm = con.createStatement();
             result = stm.executeQuery("select * from dataDonasi");
-            int number = 1;
+            int numberLeft = 0;
+            int cekBerapaDataYangSudahTampil = 0;
+            int i=2;
+            int[] arr = {2,3,4,5,6,7};
             while (result.next()){
                 //        Donasi satu
                 DataDonasi donasiSatu = new DataDonasi();
@@ -90,32 +94,47 @@ public class HalamanUtama extends Application{
                 Text donasiSatuPenyelenggara = new Text();
                 Text donasiSatuDana = new Text();
                 Text donasiSatuHari = new Text();
-                Button donasiSatuBtn = new Button("Donasi");
+                Button donasiSatuBtn = new Button();
+
+
+                cekBerapaDataYangSudahTampil++;
+                if (cekBerapaDataYangSudahTampil > 5){
+                    for (i=0; i<arr.length; i++){
+                        cekBerapaDataYangSudahTampil=0;
+                        numberLeft=0;
+                        arr[i] += 8;
+                    }
+                }
+
+
+////                <HARUSNYA DATA>
 
                 selectedImage.setImage(image1);
                 selectedImage.setFitHeight(150);
                 selectedImage.setFitWidth(200);
-                grid.add(selectedImage, number,2);
-
+                grid.add(selectedImage, numberLeft,arr[0]);
+//
                 donasiSatuJudul.setText(result.getString(2));
                 donasiSatuJudul.setFont(Font.font("Quicksand", FontWeight.LIGHT, 15));
                 donasiSatuJudul.setTextFill(Color.GREEN);
-                grid.add(donasiSatuJudul,number,3);
-
+                grid.add(donasiSatuJudul,numberLeft,arr[1]);
+//
                 donasiSatuPenyelenggara.setText(result.getString(3));
                 donasiSatuPenyelenggara.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-                grid.add(donasiSatuPenyelenggara,number,4);
-
+                grid.add(donasiSatuPenyelenggara,numberLeft,arr[2]);
+//
                 donasiSatuDana.setText("Rp. " + donasiSatu.getDanaTerkumpul().toString() + " target " + result.getString(4).toString());
                 donasiSatuDana.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-                grid.add(donasiSatuDana, number,5);
-
+                grid.add(donasiSatuDana, numberLeft,arr[3]);
+//
                 donasiSatuBtn.setFont(Font.font("Quicksand",FontWeight.BOLD,12));
-                grid.add(donasiSatuBtn,number,6);
-
+                donasiSatuBtn.setText("Donasi");
+                grid.add(donasiSatuBtn,numberLeft,arr[4]);
+//
                 donasiSatuHari.setText("\t\t\t\t" + result.getString(5));
                 donasiSatuHari.setFont(Font.font("Quicksand", FontWeight.LIGHT, 12));
-                grid.add(donasiSatuHari,number,7);
+                grid.add(donasiSatuHari,numberLeft,arr[5]);
+////                </HARUSNYA DATA>
 
                 int id_donasi =  Integer.parseInt(result.getString(1));
                 donasiSatuBtn.setOnAction(actionEvent -> {
@@ -129,9 +148,11 @@ public class HalamanUtama extends Application{
 
                 });
 
-                number+=19;
+                numberLeft+=8;
+
 //        End of Donasi Satu
             }
+
             System.out.println("berhasil");
             stm.close();
 
@@ -139,7 +160,7 @@ public class HalamanUtama extends Application{
             System.err.println("koneksi gagal : " +e.getMessage());
         }
 
-        Scene scene = new Scene(grid, 800,600);
+        Scene scene = new Scene(grid, 1360,720);
         primaryStage.setScene(scene);
         primaryStage.show();
 
